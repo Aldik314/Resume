@@ -639,7 +639,7 @@ section,
   background-color: var(--surface-color);
   padding: 10px 18px;
   border-radius: 10px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .hero .btn-ghost:hover,
