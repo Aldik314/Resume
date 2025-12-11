@@ -4,8 +4,10 @@
 
 .hero .btn-ghost:hover,
 .scroll-top:hover,
-.about .intro-content .cta-group .btn-ghost:hover {
-    animation: movek .5s;
+.about .intro-content .cta-group .btn-ghost:hover, 
+.contact .contact-form-container .contact-form .send-button:hover,
+.game .btn-game:hover {
+  animation: movek .5s;
 }
 
 @keyframes movek {
@@ -77,3 +79,54 @@
   75%  {top: 70px; left: 1000px; background: #473472;}
   100% {top: -50px; left: 1000px; background: #E3E3E3;}
 }
+
+/* assets/css/custom.css - SIMPLE VERSION */
+
+/* Error messages */
+.simple-error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Disabled button */
+.send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Form inputs with errors */
+.form-input {
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.form-input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Results display */
+#simple-results {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+}
+
+#simple-results h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+}
+
+/* Color for ratings */
+.red-rating { color: #dc3545; }
+.orange-rating { color: #fd7e14; }
+.green-rating { color: #28a745; }
+
