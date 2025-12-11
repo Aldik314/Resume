@@ -1,14 +1,9 @@
-// assets/js/custom.js - SIMPLE VERSION for Lab 5
-
-// Wait until page loads
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Page loaded - form ready!');
-    
-    // Get the form
+
     const contactForm = document.querySelector('.contact-form');
     if (!contactForm) return;
     
-    // Get all input fields
     const nameInput = document.getElementById('userName');
     const surnameInput = document.getElementById('userSurname');
     const emailInput = document.getElementById('userEmail');
@@ -19,17 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const grade3Input = document.getElementById('labGrade3');
     const submitButton = contactForm.querySelector('button[type="submit"]');
     
-    // ============================================
-    // PART 1: SIMPLE VALIDATION (Optional Task 1)
-    // ============================================
-    
-    // Show error under input
     function showError(input, message) {
-        // Remove old error
         const oldError = input.parentNode.querySelector('.simple-error');
         if (oldError) oldError.remove();
         
-        // Add new error if there is a message
         if (message) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'simple-error';
@@ -42,30 +30,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Check if field is empty
     function isEmpty(value) {
         return value.trim() === '';
     }
     
-    // Check if name/surname has only letters
     function hasOnlyLetters(value) {
         return /^[A-Za-z\s\-]+$/.test(value);
     }
     
-    // Check if email looks right
     function isEmailValid(email) {
         return email.includes('@') && email.includes('.') && email.length > 5;
     }
     
-    // Check if grade is between 1-10
     function isGradeValid(grade) {
         const num = parseInt(grade);
         return !isNaN(num) && num >= 1 && num <= 10;
     }
     
-    // Real-time validation for each field
     function setupSimpleValidation() {
-        // Check fields when user types
         const allInputs = [nameInput, surnameInput, emailInput, addressInput, grade1Input, grade2Input, grade3Input];
         
         allInputs.forEach(input => {
@@ -75,14 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Special check for phone
         phoneInput.addEventListener('input', function() {
             formatPhone(this);
             updateButton();
         });
     }
     
-    // Check one field
     function checkOneField(input) {
         const value = input.value.trim();
         
@@ -91,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
-        // Check what type of field it is
         if (input === nameInput || input === surnameInput) {
             if (!hasOnlyLetters(value)) {
                 showError(input, 'Only letters, spaces and hyphens allowed');
@@ -120,40 +99,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        showError(input, ''); // No error
+        showError(input, '');
         return true;
     }
     
-    // ============================================
-    // PART 2: SIMPLE PHONE FORMATTING (Optional Task 2)
-    // ============================================
-    
     function formatPhone(input) {
-        let numbers = input.value.replace(/\D/g, ''); // Remove non-digits
+        let numbers = input.value.replace(/\D/g, '');
         
-        // Auto-add +370 if user starts with 6
         if (numbers.startsWith('6')) {
             numbers = '370' + numbers;
         }
         
-        // Format: +370 XXX XXXXX
         let formatted = '';
         if (numbers.length > 0) {
             formatted = '+';
             
-            // First 3 digits (370)
             if (numbers.length >= 3) {
                 formatted += numbers.substring(0, 3) + ' ';
                 numbers = numbers.substring(3);
             }
             
-            // Next 3 digits
             if (numbers.length >= 3) {
                 formatted += numbers.substring(0, 3) + ' ';
                 numbers = numbers.substring(3);
             }
             
-            // Rest
             if (numbers.length > 0) {
                 formatted += numbers;
             }
@@ -162,12 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ============================================
-    // PART 3: DISABLE BUTTON (Optional Task 3)
-    // ============================================
-    
     function updateButton() {
-        // Check all required fields
         const requiredFields = [nameInput, surnameInput, emailInput, addressInput, grade1Input, grade2Input, grade3Input];
         let allValid = true;
         
@@ -177,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Enable/disable button
         if (allValid) {
             submitButton.disabled = false;
             submitButton.style.opacity = '1';
@@ -188,15 +152,10 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.style.cursor = 'not-allowed';
         }
     }
-    
-    // ============================================
-    // PART 4: FORM SUBMISSION (Required Tasks)
-    // ============================================
-    
+
     contactForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Don't reload page
+        event.preventDefault();
         
-        // Check if form is valid
         if (submitButton.disabled) {
             alert('Please fix all errors before submitting!');
             return;
@@ -204,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log('Form submitted!');
         
-        // Get all values
         const formData = {
             name: nameInput.value.trim(),
             surname: surnameInput.value.trim(),
@@ -216,32 +174,22 @@ document.addEventListener('DOMContentLoaded', function() {
             grade3: parseInt(grade3Input.value)
         };
         
-        // Calculate average
         const average = (formData.grade1 + formData.grade2 + formData.grade3) / 3;
         formData.average = average.toFixed(1);
         
-        // Print to console (Required Task 4)
         console.log('Form Data:', formData);
         
-        // Display results below form (Required Task 4 & 5)
         showResults(formData);
         
-        // Show success message (Required Task 7)
         showSuccess();
         
-        // Clear form after 2 seconds
         setTimeout(() => {
             contactForm.reset();
             updateButton();
         }, 2000);
     });
     
-    // ============================================
-    // HELPER FUNCTIONS
-    // ============================================
-    
     function showResults(data) {
-        // Create or get results div
         let resultsDiv = document.getElementById('simple-results');
         if (!resultsDiv) {
             resultsDiv = document.createElement('div');
@@ -256,14 +204,12 @@ document.addEventListener('DOMContentLoaded', function() {
             contactForm.parentNode.insertBefore(resultsDiv, contactForm.nextSibling);
         }
         
-        // Choose color based on average
         let color = 'black';
         const avg = parseFloat(data.average);
         if (avg < 4) color = 'red';
         else if (avg < 7) color = 'orange';
         else color = 'green';
         
-        // Create HTML for results
         resultsDiv.innerHTML = `
             <h3>Submitted Data:</h3>
             <p><b>Name:</b> ${data.name}</p>
@@ -283,10 +229,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function showSuccess() {
-        // Simple alert for success
         alert('✅ Form submitted successfully!');
         
-        // Or you can create a simple popup
         const popup = document.createElement('div');
         popup.textContent = 'Form submitted successfully!';
         popup.style.cssText = `
@@ -301,19 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.body.appendChild(popup);
         
-        // Remove after 3 seconds
         setTimeout(() => {
             popup.remove();
         }, 3000);
     }
-    
-    // ============================================
-    // START EVERYTHING
-    // ============================================
-    
-    // Initialize
+
     setupSimpleValidation();
-    updateButton(); // Start with button disabled
+    updateButton();
     
     console.log('Simple form handler ready!');
+
 });
